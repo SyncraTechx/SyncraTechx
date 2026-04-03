@@ -1,0 +1,72 @@
+<svg width="720" height="520" viewBox="0 0 720 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="94" y1="68" x2="628" y2="454" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#15203A"/>
+      <stop offset="1" stop-color="#090E18"/>
+    </linearGradient>
+    <linearGradient id="lineA" x1="168" y1="146" x2="552" y2="146" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8B5CF6" stop-opacity="0.05"/>
+      <stop offset="0.52" stop-color="#A855F7" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#3B82F6" stop-opacity="0.15"/>
+    </linearGradient>
+    <linearGradient id="lineB" x1="142" y1="262" x2="602" y2="262" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3B82F6" stop-opacity="0.05"/>
+      <stop offset="0.5" stop-color="#60A5FA" stop-opacity="0.95"/>
+      <stop offset="1" stop-color="#8B5CF6" stop-opacity="0.15"/>
+    </linearGradient>
+    <linearGradient id="lineC" x1="188" y1="374" x2="548" y2="374" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8B5CF6" stop-opacity="0.04"/>
+      <stop offset="0.56" stop-color="#38BDF8" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#3B82F6" stop-opacity="0.12"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(508 140) rotate(90) scale(140 180)">
+      <stop stop-color="#60A5FA" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#60A5FA" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect x="28" y="24" width="664" height="472" rx="28" fill="url(#bg)"/>
+  <rect x="28.75" y="24.75" width="662.5" height="470.5" rx="27.25" stroke="#4B556322"/>
+  <g opacity="0.26" stroke="#8FA6D9" stroke-width="1">
+    <path d="M96 106H624"/>
+    <path d="M96 186H624"/>
+    <path d="M96 266H624"/>
+    <path d="M96 346H624"/>
+    <path d="M96 426H624"/>
+    <path d="M144 72V448"/>
+    <path d="M264 72V448"/>
+    <path d="M384 72V448"/>
+    <path d="M504 72V448"/>
+    <path d="M624 72V448"/>
+  </g>
+  <ellipse cx="508" cy="140" rx="184" ry="144" fill="url(#halo)"/>
+  <path d="M168 146H552" stroke="url(#lineA)" stroke-width="7" stroke-linecap="round"/>
+  <path d="M142 262H602" stroke="url(#lineB)" stroke-width="7" stroke-linecap="round"/>
+  <path d="M188 374H548" stroke="url(#lineC)" stroke-width="7" stroke-linecap="round"/>
+  <g fill="#A855F7">
+    <circle cx="242" cy="146" r="8"/>
+    <circle cx="444" cy="146" r="8"/>
+  </g>
+  <g fill="#38BDF8">
+    <circle cx="214" cy="262" r="8"/>
+    <circle cx="510" cy="262" r="8"/>
+    <circle cx="308" cy="374" r="8"/>
+    <circle cx="492" cy="374" r="8"/>
+  </g>
+  <g fill="#E2E8F0">
+    <circle cx="360" cy="146" r="9"/>
+    <circle cx="360" cy="262" r="9"/>
+    <circle cx="360" cy="374" r="9"/>
+  </g>
+  <g opacity="0.85">
+    <rect x="520" y="86" width="108" height="58" rx="14" fill="#0E172B"/>
+    <rect x="520.75" y="86.75" width="106.5" height="56.5" rx="13.25" stroke="#60A5FA59"/>
+    <path d="M540 116H608" stroke="#60A5FA" stroke-width="5" stroke-linecap="round"/>
+    <path d="M540 128H586" stroke="#8B5CF6" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  <g opacity="0.82">
+    <rect x="104" y="312" width="124" height="64" rx="16" fill="#0E172B"/>
+    <rect x="104.75" y="312.75" width="122.5" height="62.5" rx="15.25" stroke="#A855F759"/>
+    <path d="M128 338H204" stroke="#A855F7" stroke-width="6" stroke-linecap="round"/>
+    <path d="M128 352H182" stroke="#38BDF8" stroke-width="6" stroke-linecap="round"/>
+  </g>
+</svg>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews - Syncra TechX</title>
+    <link rel="icon" type="image/png" href="static/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <style>
+        :root {
+            --bg-color: #0b0f1a;
+            --bg-accent: #05070a;
+            --text-color: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --accent-purple: #a855f7;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --gradient-primary: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+        }
+
+        /* Background & Cursor */
+        body::before {
+            content: ""; position: fixed; inset: 0;
+            background: radial-gradient(circle at 15% 20%, rgba(56, 189, 248, 0.08), transparent 24%), radial-gradient(circle at 85% 12%, rgba(168, 85, 247, 0.08), transparent 22%);
+            z-index: -2;
+        }
+        #cursor-blob { position: fixed; width: 600px; height: 600px; background: radial-gradient(circle, rgba(168, 85, 247, 0.1), transparent 70%); filter: blur(100px); pointer-events: none; z-index: -1; transform: translate(-50%, -50%); }
+
+        .container { width: 90%; max-width: 1400px; margin: 0 auto; }
+        .shimmer-text { background: linear-gradient(90deg, #fff, var(--accent-purple), var(--accent-blue), #fff); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 8s linear infinite; }
+        @keyframes shimmer { to { background-position: 200% center; } }
+
+        /* Navigation */
+        .sticky-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(11, 15, 26, 0.7); backdrop-filter: blur(25px); border-bottom: 1px solid var(--glass-border); padding: 1.25rem 0; }
+        .nav-wrap { display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo img { height: 70px; }
+        .nav-links { display: flex; gap: 3rem; list-style: none; }
+
+        /* Hero */
+        .hero { position: relative; min-height: 50vh; display: flex; align-items: center; justify-content: center; text-align: center; padding-top: 100px; }
+        .hero-bg-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.3; z-index: -1; }
+        .hero-video-gradient { position: absolute; inset: 0; background: linear-gradient(180deg, transparent, var(--bg-color)); }
+
+        /* Review Content */
+        .review-section { padding: 8rem 0; }
+        .review-layout { display: grid; grid-template-columns: 1fr 1.2fr; gap: 6rem; align-items: start; }
+        @media (max-width: 1100px) { .review-layout { grid-template-columns: 1fr; } }
+
+        .rating-header h2 { font-size: 3rem; margin-bottom: 1.5rem; text-align: left; }
+        .trust-badges { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 3rem; }
+        .badge { padding: 0.8rem 1.5rem; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: 12px; font-size: 0.85rem; color: var(--accent-cyan); font-weight: 600; }
+
+        .form-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 40px; padding: 4rem; backdrop-filter: blur(30px); }
+        .field { margin-bottom: 2.5rem; }
+        .field label { display: block; margin-bottom: 1rem; font-weight: 700; color: #fff; }
+        .field input, .field textarea { width: 100%; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 16px; padding: 1.2rem; color: #fff; transition: 0.3s; }
+        .field input:focus { border-color: var(--accent-purple); }
+
+        /* Rating Stars */
+        .rating-wrap { display: flex; align-items: center; gap: 1.5rem; }
+        .rating-grid { display: inline-flex; flex-direction: row-reverse; }
+        .rating-grid input { display: none; }
+        .rating-star { font-size: 2.5rem; color: rgba(255,255,255,0.1); cursor: pointer; transition: 0.2s; }
+        .rating-star:hover, .rating-star:hover ~ .rating-star, .rating-grid input:checked ~ .rating-star { color: #ffd700; text-shadow: 0 0 15px rgba(255, 215, 0, 0.4); }
+
+        .btn-submit { width: 100%; padding: 1.3rem; border-radius: 16px; background: var(--gradient-primary); color: #fff; font-weight: 800; border: none; cursor: pointer; transition: 0.3s; }
+        .btn-submit:hover { transform: translateY(-3px); box-shadow: 0 10px 40px rgba(168, 85, 247, 0.4); }
+
+        /* Footer */
+        .site-footer { padding: 6rem 0; background: var(--bg-accent); border-top: 1px solid var(--glass-border); text-align: center; }
+    </style>
+</head>
+<body>
+
+    <div id="cursor-blob"></div>
+
+    <header class="sticky-nav">
+        <div class="container nav-wrap">
+            <a href="index.html" class="nav-logo"><img src="static/images/logo.png" alt="Logo"></a>
+            <ul class="nav-links">
+                <li><a href="index.html" style="color:white; text-decoration:none;">Home</a></li>
+                <li><a href="index.html#services" style="color:white; text-decoration:none;">Services</a></li>
+                <li><a href="contact.html" style="color:white; text-decoration:none;">Get Started</a></li>
+            </ul>
+            <a href="index.html" class="btn" style="color:var(--accent-blue); text-decoration:none; font-weight:700;">Back</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <video class="hero-bg-video" autoplay muted loop playsinline><source src="https://assets.mixkit.co/videos/preview/mixkit-digital-circuit-board-background-video-447-large.mp4" type="video/mp4"></video>
+            <div class="hero-video-gradient"></div>
+            <div class="container" data-aos="fade-up">
+                <h1 class="shimmer-text">Client Voice & <br>Engineering Excellence</h1>
+                <p>Your feedback drives our production-grade standard.</p>
+            </div>
+        </section>
+
+        <section class="review-section container">
+            <div class="review-layout">
+                <div class="rating-header" data-aos="fade-right">
+                    <h2>Help Us Shape <br>The Future</h2>
+                    <p>At Syncra TechX, we treat every review as a diagnostic report. It helps us optimize our delivery pipeline and ensure 100% client satisfaction.</p>
+                    <div class="trust-badges">
+                        <div class="badge">99% Retention</div>
+                        <div class="badge">5-Star Standards</div>
+                        <div class="badge">Enterprise Trusted</div>
+                    </div>
+                </div>
+
+                <div class="form-card" data-aos="fade-left">
+                    <form id="review-form">
+                        <div class="field">
+                            <label for="reviewer-name">Your Full Name*</label>
+                            <input id="reviewer-name" type="text" placeholder="Jane Cooper" required>
+                        </div>
+                        <div class="field">
+                            <label for="reviewer-company">Company / Role</label>
+                            <input id="reviewer-company" type="text" placeholder="CTO at TechCorp">
+                        </div>
+                        <div class="field">
+                            <label>Overall Experience*</label>
+                            <div class="rating-wrap">
+                                <div class="rating-grid">
+                                    <input id="rating-5" type="radio" name="rating" value="5" required>
+                                    <label class="rating-star" for="rating-5">&#9733;</label>
+                                    <input id="rating-4" type="radio" name="rating" value="4">
+                                    <label class="rating-star" for="rating-4">&#9733;</label>
+                                    <input id="rating-3" type="radio" name="rating" value="3">
+                                    <label class="rating-star" for="rating-3">&#9733;</label>
+                                    <input id="rating-2" type="radio" name="rating" value="2">
+                                    <label class="rating-star" for="rating-2">&#9733;</label>
+                                    <input id="rating-1" type="radio" name="rating" value="1">
+                                    <label class="rating-star" for="rating-1">&#9733;</label>
+                                </div>
+                                <span id="rating-text" style="color:var(--accent-cyan); font-weight:700;">0/5 Stars</span>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="review-message">Your Feedback*</label>
+                            <textarea id="review-message" placeholder="How was your experience working with our elite engineering teams?" rows="5" required></textarea>
+                        </div>
+
+                        <div id="review-status" style="margin-bottom:1.5rem; font-size:0.9rem; display:none;"></div>
+                        <button type="submit" class="btn-submit">Submit Analysis</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Syncra TechX. Leading Enterprise Engineering.</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            AOS.init({ duration: 1000, once: true });
+            const blob = document.getElementById('cursor-blob');
+            let mX = 0, mY = 0, bX = 0, bY = 0;
+            window.addEventListener('mousemove', e => { mX = e.clientX; mY = e.clientY; });
+            const anim = () => { bX += (mX-bX)*0.08; bY += (mY-bY)*0.08; blob.style.left = bX+'px'; blob.style.top = bY+'px'; requestAnimationFrame(anim); };
+            anim();
+
+            const SUPABASE_URL = "https://culemvvoirbjgezttjnu.supabase.co";
+            const SUPABASE_ANON_KEY = "sb_publishable_gDWgJIb_M0VJ2phIjdc7Eg_npUTkawB";
+            const form = document.getElementById("review-form");
+            const statusBox = document.getElementById("review-status");
+            const rText = document.getElementById("rating-text");
+
+            form.querySelectorAll('input[name="rating"]').forEach(input => {
+                input.addEventListener("change", () => rText.textContent = input.value + "/5 Stars");
+            });
+
+            form.addEventListener("submit", async e => {
+                e.preventDefault();
+                const btn = form.querySelector('button');
+                btn.disabled = true;
+                statusBox.style.display = "block";
+                statusBox.textContent = "Publishing review...";
+                
+                const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                const payload = {
+                    reviewer_name: document.getElementById("reviewer-name").value.trim(),
+                    company_name: document.getElementById("reviewer-company").value.trim() || null,
+                    rating: Number(form.querySelector('input[name="rating"]:checked').value),
+                    review_message: document.getElementById("review-message").value.trim()
+                };
+
+                const { error } = await supabaseClient.from("reviews").insert([payload]);
+                btn.disabled = false;
+                if(error) {
+                    statusBox.style.color = "#f87171";
+                    statusBox.textContent = "Error submitting review.";
+                } else {
+                    statusBox.style.color = "#4ade80";
+                    statusBox.textContent = "Thank you! Your review has been published.";
+                    form.reset();
+                    rText.textContent = "0/5 Stars";
+                }
+            });
+        });
+    </script>
+</body>
+</html>
