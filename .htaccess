@@ -1,0 +1,19 @@
+RewriteEngine On
+
+# Redirect index.html → /Home
+RewriteCond %{THE_REQUEST} /index\.html [NC]
+RewriteRule ^index\.html$ /Home [R=301,L]
+
+# Home route
+RewriteRule ^Home$ index.html [L]
+
+# Other pages
+RewriteRule ^about$ about.html [L]
+RewriteRule ^contact$ contact.html [L]
+RewriteRule ^review$ review.html [L]
+RewriteRule ^privacy-policy$ privacy-policy.html [L]
+
+# Remove .html from URLs
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^([^\.]+)$ $1.html [L]

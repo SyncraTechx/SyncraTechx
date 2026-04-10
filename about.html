@@ -3,85 +3,601 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - Syncra TechX</title>
-    <link rel="icon" type="image/png" href="static/images/logo.png">
+    <title>About Syncra TechX | Engineering Excellence</title>
+    <link rel="icon" type="image/png" href="logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swa
+    p" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-    <link rel="stylesheet" href="static/css/style.css">
+    <style>
+        :root {
+            --bg-color: #0b0f1a;
+            --bg-accent: #05070a;
+            --text-color: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --accent-purple: #a855f7;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --gradient-primary: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        html { scroll-behavior: smooth; overflow-x: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Background Blob */
+        #cursor-blob {
+            position: fixed;
+            top: 0; left: 0;
+            width: 600px; height: 600px;
+            border-radius: 999px;
+            background: radial-gradient(circle at center, rgba(168, 85, 247, 0.1), rgba(59, 130, 246, 0.05) 50%, transparent 75%);
+            filter: blur(120px);
+            opacity: 0.8;
+            pointer-events: none;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+        }
+
+        .container { width: 90%; max-width: 1400px; margin: 0 auto; }
+
+        /* Navigation */
+        .sticky-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            background: rgba(9, 13, 22, 0.82);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            padding: 0.9rem 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .sticky-nav.scrolled {
+            padding: 0.72rem 0;
+            background: rgba(9, 13, 22, 0.96);
+            box-shadow: 0 14px 36px rgba(0,0,0,0.22);
+        }
+        .nav-wrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+        @media (max-width: 992px) { .nav-wrap { gap: 1.1rem; } }
+        .nav-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+        }
+        .nav-logo img {
+            height: 56px;
+            width: auto;
+            filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.18));
+            transition: transform 0.3s ease;
+        }
+        .nav-logo:hover img { transform: scale(1.05); }
+        .nav-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+        .nav-brand strong {
+            font-size: 0.98rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #fff;
+        }
+        .nav-brand span {
+            font-size: 0.7rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.56);
+        }
+        @media (max-width: 1200px) { .nav-brand { display: none; } }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+            margin-left: auto;
+            margin-right: 1rem;
+        }
+        @media (max-width: 992px) { .nav-links { display: none; } }
+        .nav-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 36px;
+            padding: 0.2rem 0;
+            text-decoration: none;
+            color: rgba(255,255,255,0.78);
+            font-weight: 500;
+            font-size: 0.92rem;
+            letter-spacing: 0.015em;
+            transition: var(--transition);
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: -8px;
+            height: 2px;
+            border-radius: 2px;
+            background: var(--accent-cyan);
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.3s ease;
+        }
+        .nav-links a:hover::after, .nav-links a.is-active::after { transform: scaleX(1); }
+        .nav-links a:hover, .nav-links a.is-active { color: #fff; }
+        .nav-actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+        .nav-actions .btn {
+            min-height: 44px;
+            padding: 0.8rem 1.45rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            box-shadow: 0 10px 28px rgba(168, 85, 247, 0.22);
+        }
+        .nav-actions .btn:hover { transform: translateY(-2px); }
+
+        /* Hero Section */
+        .about-hero {
+            padding: 12rem 0 6rem;
+            text-align: center;
+            background: radial-gradient(circle at top, rgba(168, 85, 247, 0.1) 0%, transparent 70%);
+        }
+        .shimmer-text {
+            background: linear-gradient(90deg, #fff, var(--accent-purple), var(--accent-blue), #fff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 8s linear infinite;
+        }
+        @keyframes shimmer { to { background-position: 200% center; } }
+        
+        .hero-title { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; }
+        .hero-subtitle { font-size: 1.25rem; color: var(--text-secondary); max-width: 800px; margin: 0 auto; }
+
+        /* Section Kicker */
+        .section-kicker {
+            display: inline-flex;
+            padding: 0.5rem 1.25rem;
+            border-radius: 100px;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: var(--accent-cyan);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Story Section */
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+            padding: 6rem 0;
+        }
+        @media (max-width: 992px) { .story-grid { grid-template-columns: 1fr; gap: 3rem; } }
+        
+        .story-image {
+            position: relative;
+            border-radius: 32px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            aspect-ratio: 4/3;
+            background: #000;
+        }
+        .story-image img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
+        .image-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, var(--bg-color), transparent);
+        }
+
+        /* Values Grid */
+        .values-section { padding: 8rem 0; background: rgba(255,255,255,0.02); }
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+        .value-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 3rem;
+            border-radius: 28px;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+        .value-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-purple);
+            background: rgba(255,255,255,0.08);
+        }
+        .value-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Mission / Vision */
+        .vision-box {
+            margin-top: 6rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        @media (max-width: 768px) { .vision-box { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .nav-logo img { height: 65px; } }
+        @media (max-width: 768px) { #cursor-blob { display: none; } }
+        .box-item {
+            padding: 3rem;
+            border-radius: 32px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), transparent);
+            border: 1px solid var(--glass-border);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 1.1rem 2.8rem; border-radius: 14px; font-weight: 700;
+            text-decoration: none; transition: var(--transition); cursor: pointer; font-size: 1rem;
+        }
+        .btn-primary { background: var(--gradient-primary); color: white; box-shadow: 0 10px 35px rgba(168, 85, 247, 0.35); }
+        .btn-primary:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 15px 45px rgba(168, 85, 247, 0.5); }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none; background: none; border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px; width: 42px; height: 42px;
+            align-items: center; justify-content: center;
+            cursor: pointer; color: #fff; font-size: 1.1rem; transition: var(--transition);
+        }
+        .mobile-menu-btn:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.22); }
+        @media (max-width: 992px) { .mobile-menu-btn { display: inline-flex; } }
+
+        /* Mobile Nav Overlay */
+        .mobile-nav {
+            display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 999; background: rgba(9, 13, 22, 0.97); backdrop-filter: blur(24px);
+            flex-direction: column; align-items: center; justify-content: center;
+            gap: 0.5rem; padding: 2rem;
+        }
+        .mobile-nav.is-open { display: flex; }
+        .mobile-nav a {
+            display: block; width: 100%; max-width: 320px; text-align: center;
+            padding: 1rem 1.5rem; border-radius: 14px; text-decoration: none;
+            color: rgba(255,255,255,0.8); font-size: 1.1rem; font-weight: 600;
+            transition: var(--transition); border: 1px solid transparent;
+        }
+        .mobile-nav a:hover { color: #fff; background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
+        .mobile-nav .mobile-nav-cta { margin-top: 1rem; background: var(--gradient-primary); color: #fff; border-color: transparent; box-shadow: 0 8px 24px rgba(168,85,247,0.3); }
+        .mobile-nav-close {
+            position: absolute; top: 1.25rem; right: 1.25rem;
+            background: none; border: 1px solid rgba(255,255,255,0.12); border-radius: 10px;
+            width: 42px; height: 42px; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; color: #fff; font-size: 1.1rem;
+        }
+
+        /* Enhanced Footer */
+        .site-footer {
+            position: relative;
+            padding: 5rem 0 2rem;
+            background:
+                radial-gradient(circle at 12% 18%, rgba(34, 211, 238, 0.16), transparent 24%),
+                radial-gradient(circle at 85% 12%, rgba(249, 115, 22, 0.14), transparent 22%),
+                radial-gradient(circle at 70% 78%, rgba(168, 85, 247, 0.18), transparent 28%),
+                linear-gradient(180deg, rgba(5, 7, 10, 0.92), #04060b 58%, #020308 100%);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            overflow: hidden;
+            margin-top: 0;
+        }
+        .site-footer::before {
+            content: ''; position: absolute; inset: 24px auto auto 5%;
+            width: 220px; height: 220px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.2), transparent 70%);
+            pointer-events: none; filter: blur(10px);
+        }
+        .site-footer::after {
+            content: ''; position: absolute; right: 6%; bottom: 48px;
+            width: 280px; height: 280px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.16), transparent 72%);
+            pointer-events: none; filter: blur(10px);
+        }
+        .footer-grid {
+            position: relative; z-index: 1;
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1.2fr;
+            gap: 0; padding: 2.5rem; border-radius: 28px;
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.09);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.42), inset 0 1px 0 rgba(255,255,255,0.06);
+            backdrop-filter: blur(18px);
+        }
+        .footer-links-row { display: contents; }
+        @media (max-width: 1024px) {
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .footer-col { border-bottom: 1px solid rgba(255,255,255,0.07); }
+            .footer-col:last-child { border-bottom: none; }
+        }
+        .footer-col { padding: 1.5rem 2rem; }
+        .footer-col:not(:last-child) { border-right: 1px solid rgba(255,255,255,0.07); }
+        @media (max-width: 1024px) { .footer-col:not(:last-child) { border-right: none; } }
+        .footer-col h4 { margin-bottom: 1.25rem; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 2.4px; color: rgba(255,255,255,0.45); }
+        .footer-col ul { list-style: none; }
+        .footer-col li { margin-bottom: 0.75rem; color: var(--text-secondary); font-size: 0.95rem; cursor: pointer; transition: 0.25s; }
+        .footer-col li:hover { color: #9efcff; padding-left: 6px; }
+        .footer-col a { color: inherit; text-decoration: none; }
+        .footer-logo { height: 56px; width: auto; max-width: 160px; display: block; margin-bottom: 1rem; filter: drop-shadow(0 0 24px rgba(168, 85, 247, 0.3)); }
+        .footer-tagline { font-size: 0.95rem; color: var(--text-secondary); max-width: 28ch; line-height: 1.6; }
+        .footer-socials { display: flex; gap: 0.75rem; margin-top: 1.5rem; align-items: center; }
+        .footer-socials i {
+            width: 40px; height: 40px; border-radius: 12px; display: inline-flex;
+            align-items: center; justify-content: center; font-size: 1rem;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; cursor: pointer;
+        }
+        .footer-socials i:hover { transform: translateY(-3px); border-color: rgba(110,231,255,0.45); box-shadow: 0 0 14px rgba(6,182,212,0.18); }
+        .footer-contact-label { display: inline-block; margin-bottom: 0.6rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; color: rgba(158,252,255,0.76); text-transform: uppercase; }
+        .footer-contact-email { color: #fff; font-weight: 700; font-size: 0.97rem; }
+        .footer-bottom { position: relative; z-index: 1; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06); text-align: center; font-size: 0.88rem; color: var(--text-secondary); }
+        .whatsapp-fab {
+            position: fixed; bottom: 2rem; right: 2rem; z-index: 998;
+            width: 58px; height: 58px; border-radius: 50%; background: #25d366;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.65rem; color: #fff; text-decoration: none;
+            box-shadow: 0 6px 24px rgba(37,211,102,0.45);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .whatsapp-fab:hover { transform: scale(1.12); box-shadow: 0 10px 32px rgba(37,211,102,0.6); }
+        @media (max-width: 640px) {
+            .footer-grid { display: flex; flex-direction: column; padding: 0; background: none; border: none; box-shadow: none; backdrop-filter: none; }
+            .footer-col { padding: 1.25rem 0; border-right: none !important; border-bottom: 1px solid rgba(255,255,255,0.07) !important; }
+            .footer-col:last-child { border-bottom: none !important; }
+            .footer-links-row { display: grid; grid-template-columns: 1fr 1fr; }
+            .footer-links-row .footer-col { border-bottom: none !important; }
+            .footer-links-row .footer-col:first-child { border-right: 1px solid rgba(255,255,255,0.07) !important; }
+        }
+    </style>
 </head>
-<body data-page="about">
-    <div id="site-header"></div>
+<body>
+
+    <div id="cursor-blob"></div>
+
+    <header class="sticky-nav">
+        <div class="container nav-wrap">
+            <a href="index.html" class="nav-logo">
+                <img src="logo.png" alt="Syncra TechX Logo">
+                <span class="nav-brand">
+                    <strong>Syncra TechX</strong>
+                    <span>Enterprise Engineering</span>
+                </span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="/Home">Home</a></li>
+                <li><a href="/about" class="is-active">About Us</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#cases">Our Work</a></li>
+                <li><a href="/review">Reviews</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="/contact" class="btn btn-primary nav-cta-btn">Contact Us</a>
+                <button class="mobile-menu-btn" aria-label="Open menu" onclick="document.getElementById('mobileNav').classList.add('is-open')">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <nav class="mobile-nav" id="mobileNav">
+        <button class="mobile-nav-close" aria-label="Close menu" onclick="document.getElementById('mobileNav').classList.remove('is-open')">
+            <i class="fas fa-times"></i>
+        </button>
+        <a href="/Home" onclick="document.getElementById('mobileNav').classList.remove('is-open')">Home</a>
+        <a href="/about" onclick="document.getElementById('mobileNav').classList.remove('is-open')">About Us</a>
+        <a href="index.html#services" onclick="document.getElementById('mobileNav').classList.remove('is-open')">Services</a>
+        <a href="index.html#cases" onclick="document.getElementById('mobileNav').classList.remove('is-open')">Our Work</a>
+        <a href="/review" onclick="document.getElementById('mobileNav').classList.remove('is-open')">Reviews</a>
+        <a href="/contact" class="mobile-nav-cta">Contact Us</a>
+    </nav>
 
     <main>
-        <section class="hero small-hero about-hero">
-            <div class="hero-bg-svg hero-bg-soft">
-                <svg width="100%" height="100%" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="about-grid-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:var(--accent-purple);stop-opacity:0.18" />
-                            <stop offset="100%" style="stop-color:var(--accent-blue);stop-opacity:0.18" />
-                        </linearGradient>
-                    </defs>
-                    <path d="M0 160 L1000 160 M0 360 L1000 360 M0 560 L1000 560 M0 760 L1000 760" stroke="url(#about-grid-grad)" stroke-width="1" fill="none" />
-                    <path d="M160 0 L160 1000 M360 0 L360 1000 M560 0 L560 1000 M760 0 L760 1000" stroke="url(#about-grid-grad)" stroke-width="1" fill="none" />
-                    <circle cx="260" cy="260" r="3" fill="var(--accent-purple)">
-                        <animate attributeName="r" values="3;5;3" dur="4s" repeatCount="indefinite" />
-                        <animate attributeName="opacity" values="0.2;1;0.2" dur="4s" repeatCount="indefinite" />
-                    </circle>
-                    <circle cx="740" cy="420" r="3" fill="var(--accent-blue)">
-                        <animate attributeName="r" values="3;5;3" dur="5s" repeatCount="indefinite" />
-                        <animate attributeName="opacity" values="0.2;1;0.2" dur="5s" repeatCount="indefinite" />
-                    </circle>
-                </svg>
-            </div>
-            <div class="hero-orbit hero-orbit-left about-orbit-left"></div>
-            <div class="hero-orbit hero-orbit-right about-orbit-right"></div>
-            <div class="hero-orbit about-orbit-top"></div>
-            <div class="hero-orbit about-orbit-center"></div>
-            <div class="container about-hero-content">
-                <h1 data-aos="fade-up">About Syncra TechX</h1>
-                <p data-aos="fade-up" data-aos-delay="120">Bridging the gap between ambitious ideas and technical excellence.</p>
+        <!-- About Hero -->
+        <section class="about-hero">
+            <div class="container" data-aos="fade-up">
+                <div class="section-kicker">Our Identity</div>
+                <h1 class="hero-title">Engineering the <br><span class="shimmer-text">Future of Enterprise</span></h1>
+                <p class="hero-subtitle">Syncra TechX is a specialized engineering powerhouse dedicated to solving complex technical challenges for global organizations.</p>
             </div>
         </section>
 
-        <section class="container about-section-mission">
-            <div class="card" data-aos="fade-up" data-aos-delay="100">
-                <h2>Our Mission</h2>
-                <p>Founded in 2026, Syncra TechX was born from a simple observation: most companies struggle to keep their technical capabilities in sync with their business ambitions. Our mission is to design and deliver the intelligent software systems necessary to close that gap.</p>
-                <p>We operate at the intersection of innovation and execution, ensuring that every line of work contributes directly to our clients' success.</p>
+        <!-- Our Story -->
+        <section class="container story-grid">
+            <div class="story-content" data-aos="fade-right">
+                <div class="section-kicker">The Journey</div>
+                <h2 style="font-size: 2.5rem; margin-bottom: 1.5rem;">From Pune to the World</h2>
+                <p style="margin-bottom: 1.5rem; font-size: 1.1rem; color: var(--text-secondary);">
+                    Founded in 2026 in the heart of Hinjewadi, Pune, Syncra TechX was born out of a simple realization: Enterprises don't just need vendors; they need partners who understand the DNA of production-grade systems.
+                </p>
+                <p style="margin-bottom: 1.5rem; font-size: 1.1rem; color: var(--text-secondary);">
+                    We started as a small team of elite cloud architects and full-stack developers. Today, we are a 45+ strong engineering firm delivering high-performance digital architectures for industries ranging from high-frequency Fintech to HIPAA-compliant Healthcare.
+                </p>
+                <div style="display: flex; gap: 2rem; margin-top: 2rem;">
+                    <div>
+                        <h3 style="color: var(--accent-cyan); font-size: 2rem;">45+</h3>
+                        <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">Engineers</p>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--accent-purple); font-size: 2rem;">150+</h3>
+                        <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">Deliveries</p>
+                    </div>
+                </div>
+            </div>
+            <div class="story-image" data-aos="zoom-in">
+                <div class="image-overlay"></div>
+                <img src="about-building.jpeg" alt="Syncra TechX building exterior" style="width:100%; height:100%; object-fit:cover; object-position:center; opacity:0.75;">
             </div>
         </section>
 
-        <section class="container about-section-values">
-            <div class="services-grid">
-                <div class="card" data-aos="fade-up" data-aos-delay="150">
-                    <h3>Our Values</h3>
-                    <ul>
-                        <li><strong>Innovation First:</strong> We never settle for "good enough."</li>
-                        <li><strong>Transparency:</strong> Open communication at every step.</li>
-                        <li><strong>Excellence:</strong> We take pride in our craft.</li>
-                    </ul>
+        <!-- Values Section -->
+        <section class="values-section">
+            <div class="container">
+                <div style="text-align: center;" data-aos="fade-up">
+                    <div class="section-kicker">Philosophy</div>
+                    <h2 style="font-size: 3rem;">The Syncra Core Values</h2>
                 </div>
-                <div class="card" data-aos="fade-up" data-aos-delay="250">
-                    <h3>Our Impact</h3>
-                    <p>We have helped over 50 startups and enterprises launch products that have reached millions of users globally.</p>
+                
+                <div class="values-grid">
+                    <div class="value-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="value-icon"><i class="fas fa-shield-virus"></i></div>
+                        <h3>Engineering Resilience</h3>
+                        <p style="color: var(--text-secondary); margin-top: 1rem;">We build systems that don't just work, they endure. Reliability is the cornerstone of every line of code we ship.</p>
+                    </div>
+                    <div class="value-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="value-icon"><i class="fas fa-fingerprint"></i></div>
+                        <h3>Radical Transparency</h3>
+                        <p style="color: var(--text-secondary); margin-top: 1rem;">From sprint demos to infrastructure costs, we believe in complete visibility. No black boxes, just clear engineering.</p>
+                    </div>
+                    <div class="value-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="value-icon"><i class="fas fa-rocket"></i></div>
+                        <h3>Innovation First</h3>
+                        <p style="color: var(--text-secondary); margin-top: 1rem;">We stay at the bleeding edge of AI, cloud-native tech, and hardware integration to give our clients a competitive lead.</p>
+                    </div>
                 </div>
-                <div class="card" data-aos="fade-up" data-aos-delay="350">
-                    <h3>How We Work</h3>
-                    <p>Cross-functional teams, frequent demos, and tight feedback loops keep delivery aligned with your goals.</p>
+
+                <!-- Mission / Vision -->
+                <div class="vision-box">
+                    <div class="box-item" data-aos="fade-right">
+                        <h3 style="margin-bottom: 1rem; color: var(--accent-cyan);"><i class="fas fa-bullseye" style="margin-right: 10px;"></i> Our Mission</h3>
+                        <p style="color: var(--text-secondary);">To empower enterprises with elite engineering talent and resilient digital systems that drive operational excellence and sustainable growth.</p>
+                    </div>
+                    <div class="box-item" data-aos="fade-left">
+                        <h3 style="margin-bottom: 1rem; color: var(--accent-purple);"><i class="fas fa-eye" style="margin-right: 10px;"></i> Our Vision</h3>
+                        <p style="color: var(--text-secondary);">To become the global standard for high-complexity software delivery, known for bringing "Tech and Talent in Sync" across the world's most critical systems.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="container" style="padding: 8rem 0; text-align: center;">
+            <div style="background: radial-gradient(circle at center, rgba(59, 130, 246, 0.1), transparent); padding: 4rem; border-radius: 40px; border: 1px solid var(--glass-border);" data-aos="zoom-in">
+                <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Want to see how we work?</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 2.5rem; max-width: 600px; margin-left: auto; margin-right: auto;">Explore our technical case studies or schedule a discovery call with our solutions architects.</p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="index.html#cases" class="btn btn-primary">View Case Studies</a>
+                    <a href="contact.html" class="btn" style="border: 1px solid var(--accent-blue); color: #fff;">Get in Touch</a>
                 </div>
             </div>
         </section>
     </main>
 
-    <div id="site-footer"></div>
-    <div id="cursor-blob" aria-hidden="true"></div>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <img src="logo.png" alt="Syncra TechX" class="footer-logo">
+                    <p class="footer-tagline">Leading the next generation of enterprise engineering and production-grade software delivery.</p>
+                    <div class="footer-socials">
+                        <a href="https://www.linkedin.com/company/syncra-techx/" target="_blank" rel="noopener"><i class="fab fa-linkedin" style="color: var(--accent-blue);"></i></a>
+                        <a href="https://github.com/SyncraTechx" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+                        <a href="https://www.instagram.com/syncratech_x_ultra?igsh=MXUzbnRka3V5Yjg0ZQ==" target="_blank" rel="noopener"><i class="fab fa-instagram" style="color: #f77737;"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links-row">
+                    <div class="footer-col">
+                        <h4>Capabilities</h4>
+                        <ul>
+                            <li><a href="index.html#services">Custom Software</a></li>
+                            <li><a href="index.html#services">Cloud DevOps</a></li>
+                            <li><a href="index.html#services">AI Engineering</a></li>
+                            <li><a href="index.html#services">App Development</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="index.html#portfolio">Portfolio</a></li>
+                            <li><a href="index.html#cases">Case Studies</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <span class="footer-contact-label">Email</span>
+                    <p class="footer-contact-email">syncratechx@gmail.com</p>
+                    <p style="margin-top: 1.25rem; font-size: 0.92rem;">Gera Imperium Rise,<br>Hinjewadi Phase 2, Pune, India</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 Syncra TechX. All Rights Reserved. Designed for Enterprise Scale.
+            </div>
+        </div>
+    </footer>
 
-    <script src="static/js/layout.js"></script>
+    <a href="https://api.whatsapp.com/send/?phone=917058224339&text&type=phone_number&app_absent=0" target="_blank" rel="noopener" class="whatsapp-fab" aria-label="Chat on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="static/js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            AOS.init({ duration: 1000, once: true });
+
+            // Cursor Blob Logic
+            const blob = document.getElementById('cursor-blob');
+            let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+            let blobX = mouseX, blobY = mouseY;
+
+            window.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            const animateBlob = () => {
+                blobX += (mouseX - blobX) * 0.08;
+                blobY += (mouseY - blobY) * 0.08;
+                blob.style.left = `${blobX}px`;
+                blob.style.top = `${blobY}px`;
+                requestAnimationFrame(animateBlob);
+            };
+            animateBlob();
+
+            // Nav Scroll Effect
+            window.addEventListener('scroll', () => {
+                const nav = document.querySelector('.sticky-nav');
+                if (window.scrollY > 50) nav.classList.add('scrolled');
+                else nav.classList.remove('scrolled');
+            });
+        });
+    </script>
 </body>
 </html>
