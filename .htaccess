@@ -1,0 +1,24 @@
+RewriteEngine On
+
+# 🔴 FORCE redirect Syncra/index.html → Syncra/Portfolio
+RewriteCond %{REQUEST_URI} ^/Syncra/index\.html$ [NC]
+RewriteRule ^Syncra/index\.html$ /Syncra/Portfolio [R=301,L]
+
+# Root index redirect
+RewriteCond %{THE_REQUEST} /index\.html [NC]
+RewriteRule ^index\.html$ /Home [R=301,L]
+
+# Routes
+RewriteRule ^Home$ index.html [L]
+RewriteRule ^Syncra/Portfolio$ Syncra/index.html [L]
+
+# Other pages
+RewriteRule ^about$ about.html [L]
+RewriteRule ^contact$ contact.html [L]
+RewriteRule ^review$ review.html [L]
+RewriteRule ^privacy-policy$ privacy-policy.html [L]
+
+# Remove .html
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^([^\.]+)$ $1.html [L]
